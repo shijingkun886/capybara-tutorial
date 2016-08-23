@@ -9,6 +9,10 @@ module PageWithPostList
 		find('.parent .left table').find('tbody').all('tr')
 	end
 
+  def new_post_in_list
+		find('.parent .left table tbody tr').all('td')[0]
+	end
+
 	def new_post_link
 		find('.parent .left a[href="/posts/new"]')
 	end
@@ -21,12 +25,26 @@ module PageWithPostList
 		find('#notice').text
 	end
 
+  def succ_return
+		find('body').all('p')[1]
+	end
+
 	def back_link
 		find('a[href="/posts"]')
 	end
 
-	define_action :fill_post do |title, content|
+	define_action :submit_post do |title, content|
 		fill_in('post_title', with: title)
 		fill_in('post_content', with: content)
-	end
+    create_post_button.click
+  end
+
+	define_action :go_back do
+		back_link.click
+  end
+
+  define_action :click_new do
+		new_post_link.click
+  end
+
 end
